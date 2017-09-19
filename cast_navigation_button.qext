@@ -1,0 +1,8 @@
+{
+	"name" : "Cast Navigation Button",
+	"description" : "Cast Navigation Button",
+	"icon" : "extension",
+	"type" : "visualization",
+	"version": "0.3b",
+	"author": "Cast Solutions"
+}
