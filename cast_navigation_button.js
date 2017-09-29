@@ -7,6 +7,7 @@ function getlist(){
     var Lvalues = [];
     var app = qlik.currApp();
     var i = 0;
+    //opts.push({"value":"","label":"None"});
     app.getAppObjectList('sheet', function(reply){
         for (i == 0;i < reply.qAppObjectList.qItems.length;i++){
         xvalue =  reply.qAppObjectList.qItems[i];
@@ -31,7 +32,7 @@ getlist();
                         DropDownA: {
                             type: "string",
                             component: "dropdown",
-                            label: "Page Selector",
+                            label: "Sheet Selector",
                             ref: "PageSelector",
                             //options: opts,
                             options: function(){
@@ -42,15 +43,16 @@ getlist();
                     		type: "items",
                     		label: "Button Settings",
                     		items:{
-	                        TextBoxA: {
-	                            ref: "ButtonID",
-	                            label: "Button ID",
-	                            type: "string",
-	                            },
+	                        //TextBoxA: {
+	                        //    ref: "ButtonID",
+	                        //    label: "Button ID",
+	                        //    type: "string",
+	                        //    },
 	                        TextBoxB: {
 	                            ref: "ButtonLabel",
 	                            label: "Button Text",
 	                            type: "string",
+	                            component: "textarea",
 	                            defaultValue: "undefined",
 	                            },
 	                        DropDownB: {
@@ -58,45 +60,45 @@ getlist();
 		                        component: "dropdown",
 	                            label: "Button Class",
 	                            ref: "ButtonClass",
-	                            options:[{'label':'Primary','value':'btn-primary'},
+	                            options:[
+	                            {'label':'None','value':''},
+	                            {'label':'Primary','value':'btn-primary'},
 	                            {'label':'Secondary','value':'btn-secondary'},
 	                            {'label':'Success','value':'btn-success'},
 	                            {'label':'Danger','value':'btn-danger'},
 	                            {'label':'Warning','value':'btn-warning'},
 	                            {'label':'Info','value':'btn-info'},
-	                            //{'label':'Light','value':'btn-light'},
-	                            //{'label':'Dark','value':'btn-dark'},
 	                            {'label':'Link','value':'btn-link'},
-	                            //{'label':'Outline Primary','value':'btn-outline-primary'},
-	                            //{'label':'Outline Secondary','value':'btn-outline-secondary'},
-	                            //{'label':'Outline Success','value':'btn-outline-success'},
-	                            //{'label':'Outline Danger','value':'btn-outline-danger'},
-	                            //{'label':'Outline Warning','value':'btn-outline-warning'},
-	                            //{'label':'Outline Info','value':'btn-outline-info'},
-	                            //{'label':'Outline Light','value':'btn-outline-light'},
-	                            //{'label':'Outline Dark','value':'btn-outline-dark'},
 	                            ],
 	                            defaultValue: "btn-secondary",
 	                            },
-	                        TextBoxC: {
-	                            ref: "ButtonWidth",
-	                            label: "Width",
+	                        TextBoxY: {
+	                            ref: "Buttoncolor",
+	                            label: "Button Color",
 	                            type: "string",
 	                            //defaultValue: "undefined",
 	                            },
-	                        TextBoxD: {
-	                            ref: "ButtonHeight",
-	                            label: "Height",
+	                        TextBoxX: {
+	                            ref: "Fontcolor",
+	                            label: "Font Color",
 	                            type: "string",
 	                            //defaultValue: "undefined",
-	                            },	                            
+	                            },
+
+	                        TextBoxC: {
+	                            ref: "Fontsize",
+	                            label: "Font Size",
+	                            type: "string",
+	                            //defaultValue: "undefined",
+	                            },
+
 	                        TextBoxE: {
 	                            ref: "Style",
 	                            label: "Custom CSS",
 	                            component: "textarea",
 	                            type: "string",
 	                            //defaultValue: "undefined",
-	                            },   
+	                            },			   
 	                    	},
                     	},
 	                    About_Section: {
@@ -104,13 +106,22 @@ getlist();
                     		label: "About",
                     		items:{
 		                        About_TextA: {
-		                            label: 'Cast Navigation Button V0.3b',
+		                            label: 'Cast Navigation Button V1.0',
 		                            component: "text",
 		                            },   
 		                        About_TextB: {
+		                            label: 'Release Date: 29.Sep.2017',
+		                            component: "text",
+		                            },   
+		                        About_TextC: {
 		                            label: 'Developed by Cast Solutions',
 		                            component: "link",
 		                            url:"http://www.castsolutions.com.au/"
+		                            },
+		                        About_TextD: {
+		                            label: 'Documentation',
+		                            component: "link",
+		                            url:"http://cdn.mixpad.net/Cast_Navi_Btn_v10_documentation.html"
 		                            },
                     		},
                             },
@@ -119,17 +130,17 @@ getlist();
                 }
             },
         paint: function ($element,layout){
+		    var btncolor="background-color:"+layout.Buttoncolor+";";
             var btnlabel=layout.ButtonLabel;
-            $element.html("<head><meta charset='utf-8'><script src='https://use.fontawesome.com/7c3ee51946.js'></script></head>")
-            var btnwidth="width:"+layout.ButtonWidth;
-            var btnheight="height:"+layout.ButtonHeight;
-            //var btnheight="height:"+$element.height();
-            console.log(btnheight);
-            //$element.html("<div class='bootstrap_inside'><button type='button' class='btn "+layout.ButtonClass+"'' style='"+btnwidth+";"+btnheight+";"+layout.Style+"' id="+layout.ButtonID+">"+btnlabel+"</button></div>");
-            $element.append("<div class='bootstrap_inside'><button type='button' class='btn "+layout.ButtonClass+"'' style='"+btnwidth+";"+btnheight+";"+layout.Style+"' id="+layout.ButtonID+">"+btnlabel+"</button></div>");
-            //$element.append("<div><button type='button' class='btn "+layout.ButtonClass+"'' style='"+btnwidth+";"+btnheight+";"+layout.Style+"' id="+layout.ButtonID+">Button Testing <span class='glyphicon glyphicon-music'>!</span></button></div>");
-            //$element.append('<div class="bootstrap_inside"><button type="button" class="btn btn-primary" id="id"> Button Testing <i class="fa fa-camera-retro fa-lg"></i>!!!</button></div>')
-            $("#"+layout.ButtonID).click(function(){
+            var fntcolor="color:"+layout.Fontcolor+";";
+            $element.html("<head><meta charset='utf-8'><script src='https://use.fontawesome.com/7c3ee51946.js'></script></head>");
+            var font_size="font-size:"+layout.Fontsize+"px;";
+            var btnid=Math.round(Math.random()*10000);
+            console.log(btnid);
+            //$element.append("<div class='bootstrap_inside' style='height:100%;'><button type='button' class='btn "+layout.ButtonClass+"'' style='height:100%;width:100%;"+font_size+fntcolor+btncolor+layout.Style+"' id="+layout.ButtonID+">"+btnlabel+"</button></div>");
+			$element.append("<div class='bootstrap_inside' style='height:100%;'><button type='button' class='btn "+layout.ButtonClass+"'' style='height:100%;width:100%;"+font_size+fntcolor+btncolor+layout.Style+"' id="+btnid+">"+btnlabel+"</button></div>");
+            //$("#"+layout.ButtonID).click(function(){
+            $("#"+btnid).click(function(){
                 var app = qlik.currApp();
                 qlik.navigation.gotoSheet(layout.PageSelector);
                 });

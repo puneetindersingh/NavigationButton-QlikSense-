@@ -3,6 +3,6 @@
 	"description" : "Cast Navigation Button",
 	"icon" : "extension",
 	"type" : "visualization",
-	"version": "0.3b",
+	"version": "1.0",
 	"author": "Cast Solutions"
 }
