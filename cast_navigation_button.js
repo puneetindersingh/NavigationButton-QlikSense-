@@ -1,7 +1,23 @@
-define(["jquery","text!./scoped-bootstrap.css","qlik"],function ($,cssContent,qlik){
+define(["jquery","text!./scoped-bootstrap.css","qlik"],
+function ($,cssContent,qlik){
+
         'use strict';
 $("<style>").html(cssContent).appendTo("head");
 var opts = [];
+var palette = [
+        "#b0afae",
+        "#7b7a78",
+        "#545352",
+        "#4477aa",
+        "#7db8da",
+        "#b6d7ea",
+        "#46c646",
+        "#f93f17",
+        "#ffcf02",
+        "#276e27",
+        "#ffffff",
+        "#000000"
+    ];
 function getlist(){
     var xvalue;
     var Lvalues = [];
@@ -16,19 +32,39 @@ function getlist(){
         opts.push(Lvalues);
         Lvalues = [];
         };
+
         //opts.push({"label":"None","value":""});
 });
 };
 var opts = [];
 getlist();
 
+
     return {
-        definition : {      
+        definition : {
             type: "items",
             component: "accordion",
-            items: {appearance:{
+            items: {
+
+
+
+
+
+              appearance:{
                     uses: "settings",
+
                     items: {
+
+
+            						MyColorPicker: {
+            							label:"My color-picker",
+            							component: "color-picker",
+            							ref: "myColor",
+            							type: "integer",
+            							defaultValue: 3
+
+            					}
+            				,
                         DropDownA: {
                             type: "string",
                             component: "dropdown",
@@ -72,12 +108,12 @@ getlist();
 	                            ],
 	                            defaultValue: "btn-secondary",
 	                            },
-	                        TextBoxY: {
-	                            ref: "Buttoncolor",
-	                            label: "Button Color",
-	                            type: "string",
+	                        //TextBoxY: {
+	                        //    ref: "Buttoncolor",
+	                        //    label: "Button Color",
+	                        //    type: "string",
 	                            //defaultValue: "undefined",
-	                            },
+	                        //    },
 	                        TextBoxX: {
 	                            ref: "Fontcolor",
 	                            label: "Font Color",
@@ -98,7 +134,7 @@ getlist();
 	                            component: "textarea",
 	                            type: "string",
 	                            //defaultValue: "undefined",
-	                            },			   
+	                            },
 	                    	},
                     	},
 	                    About_Section: {
@@ -108,11 +144,11 @@ getlist();
 		                        About_TextA: {
 		                            label: 'Cast Navigation Button V1.0',
 		                            component: "text",
-		                            },   
+		                            },
 		                        About_TextB: {
 		                            label: 'Release Date: 29.Sep.2017',
 		                            component: "text",
-		                            },   
+		                            },
 		                        About_TextC: {
 		                            label: 'Developed by Cast Solutions',
 		                            component: "link",
@@ -130,9 +166,11 @@ getlist();
                 }
             },
         paint: function ($element,layout){
-		    var btncolor="background-color:"+layout.Buttoncolor+";";
+		    var btncolor="background-color:"+palette[layout.myColor]+";";
             var btnlabel=layout.ButtonLabel;
-            var fntcolor="color:"+layout.Fontcolor+";";
+           // $element.css("background-color", palette[layout.myColor]);
+           var fntcolor="color:"+layout.Fontcolor+";";
+
             $element.html("<head><meta charset='utf-8'><script src='https://use.fontawesome.com/7c3ee51946.js'></script></head>");
             var font_size="font-size:"+layout.Fontsize+"px;";
             var btnid=Math.round(Math.random()*10000);
